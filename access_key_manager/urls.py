@@ -21,5 +21,8 @@ from key_manager.api import views as api_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('key_manager.urls')),
+
+    path("__reload__/", include("django_browser_reload.urls")),
+
     # path('key_manager/api/', api_views.AccessKeyListCreate.as_view(), name='api-key-list-create'),
 ]
