@@ -20,7 +20,6 @@ from key_manager.api import views as api_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
     path('', include('key_manager.urls')),
-    path('key_manager/api/', api_views.AccessKeyListCreate.as_view(), name='api-key-list-create'),
+    # path('key_manager/api/', api_views.AccessKeyListCreate.as_view(), name='api-key-list-create'),
 ]

@@ -1,21 +1,49 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
-from .models import AccessKey
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+
 
 def index(request):
     return render(request, "base.html")
 
+
 # Create your views here.
-class KeyListview(LoginRequiredMixin, ListView):
-    model = AccessKey
-    template_name = 'keymanager/keylist.html'
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, raw_password=password)
+            login(request, user)
+            return redirect('index')
+        else:
+            form = UserCreationForm()
+        return render(request, 'signup.html', {'form': form})
 
-    def get_queryset(self):
-        return AccessKey.objects.filter(user=self.request.user)
+def signin(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'signin.html', {'form': form})
 
 
-class KeyDetailView(LoginRequiredMixin, DetailView):
-    model = AccessKey
-    template_name = 'keymanager/key_details.html.html'
+def signout(request):
+    logout(request)
+    return redirect('index')

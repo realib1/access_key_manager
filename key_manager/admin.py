@@ -3,7 +3,7 @@ from .models import AccessKey
 
 
 # Register your models here.
-@admin.action(description='Revoke selected keys')
+@admin.action(description='Revoke selected keymanager')
 def revoke_keys(modeladmin, request, queryset):
     queryset.update(status='revoked')
 
