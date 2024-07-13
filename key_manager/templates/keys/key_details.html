@@ -1,0 +1,38 @@
+{% extends base.html %}
+
+{% block content %}
+
+<h1>Access Key Details</h1>
+
+<div>
+    <div>
+        <h3>Key Information</h3>
+    </div>
+
+    <div>
+        <dl>
+            <div>
+                <dt>Key</dt>
+                <dd>{{ key.key }}</dd>
+            </div>
+
+            <div>
+                <dt>Status</dt>
+                <dd>{{ key.status }}</dd>
+            </div>
+
+            <div>
+                <dt>Procurement Date</dt>
+                <dd>{{ key.procurement_date }}</dd>
+            </div>
+
+            <div>
+                <dt>Expiry Date</dt>
+                <dd>{{ key.expiry_date }}</dd>
+            </div>
+
+        </dl>
+    </div>
+</div>
+
+{% endblock %}

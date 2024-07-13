@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Your Access Keys</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Key</th>
+        <th>Status</th>
+        <th>Procurement Date</th>
+        <th>Expiry Date</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for key in object_list %}
+    <td>{{ key.key }}</td>
+    <td>{{ key.status }}</td>
+    <td>{{ key.procument_date }}</td>
+    <td>{{ key.expiry_date }}</td>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
