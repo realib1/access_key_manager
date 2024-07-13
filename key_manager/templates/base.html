@@ -21,10 +21,10 @@
 
        <div class="nav-menu">
         <ul class="nav-menu-list">
-            <li class="nav-list"><a class="nav-link" href="">Sign In</a></li>
-            <li class="nav-list"><a class="nav-link" href="">Sign Out</a></li>
-            <li class="nav-list"><a class="nav-link" href="">Sign Up</a></li>
-            <li class="nav-list"><a class="nav-link" href="">Change Password</a></li>
+            <li class="nav-list"><a class="nav-link" href="{% url 'signin' %}">Sign In</a></li> 
+            <li class="nav-list"><a class="nav-link" href="{% url 'signout' %}">Sign Out</a></li> 
+            <li class="nav-list"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li> 
+            <li class="nav-list"><a class="nav-link" href="{% url 'reset_password' %}">Reset Password</a></li>
         </ul>
        </div>
    </nav>

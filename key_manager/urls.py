@@ -9,5 +9,5 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
-    path('reset_password/', views.password_reset_request, name='reset_password'),
+    path('reset_password/', views.reset_password, name='reset_password'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
