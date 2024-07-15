@@ -1,38 +1,95 @@
-{% extends base.html %}
+{% load static tailwind_tags %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   {% tailwind_css %}
+{#    <link rel="stylesheet" href="{% static 'style.css' %}">#}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+        <script src="{% static 'js/main.js' %}" defer></script>
+    <title>Access Key Manager | {% block title %} {% endblock %}</title>
+</head>
+<body class="font-ubuntu bg-light">
+<nav class="flex justify-around items-center bg-blue text-light p-6 container w-full">
 
-<h1>Access Key Details</h1>
-
-<div>
-    <div>
-        <h3>Key Information</h3>
+    <div class="flex items-center flex-shrink-0 text-light mr-6">
+        <span class="font-semibold text-xl tracking-tight">Access Key Manager</span>
     </div>
 
-    <div>
-        <dl>
-            <div>
-                <dt>Key</dt>
-                <dd>{{ key.key }}</dd>
-            </div>
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto block">
+        <div class="text-sm lg:flex-grow">
+            {% if user.is_authenticated %}
+                <a href="{% url 'signout' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                    Sign Out
+                </a>
 
-            <div>
-                <dt>Status</dt>
-                <dd>{{ key.status }}</dd>
-            </div>
-
-            <div>
-                <dt>Procurement Date</dt>
-                <dd>{{ key.procurement_date }}</dd>
-            </div>
-
-            <div>
-                <dt>Expiry Date</dt>
-                <dd>{{ key.expiry_date }}</dd>
-            </div>
-
-        </dl>
+                  {% if user.has_usable_password %}
+                    <!-- User has a password, so display reset password link -->
+                    <a href="{% url 'password_reset' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                        Change Password
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'signin' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                    Sign In
+                </a>
+                <a href="{% url 'signup' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                    Sign Up
+                </a>
+                <a href="{% url 'password_reset' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                        Reset Password
+                    </a>
+            {% endif %}
+        </div>
     </div>
-</div>
 
+</nav>
+<main class="pt-5">
+    {% block content %}
+
+<div class="container mx-auto px-4 py-16">
+        <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
+            <h1 class="text-3xl font-bold mb-6 text-center">Key Details</h1>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Key ID:</label>
+                <p class="bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4">{{ key.id }}</p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Key:</label>
+                <p class="bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4">{{ key.key }}</p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Procurement Date:</label>
+                <p class="bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4">{{ key.procurement_date }}</p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Expiry Date:</label>
+                <p class="bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4">{{ key.expiry_date }}</p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Key Status:</label>
+                <p class="bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4">{{ key.status }}</p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Usage Count</label>
+                <p class="bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4">{{ key.usage_count }}</p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Max Usage:</label>
+                <p class="bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4">{{ key.max_usage }}</p>
+            </div>
+
+
+            <div class="text-center">
+                <a href="{% url 'keylist' %}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to List</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+</main>
+</body>
+</html>

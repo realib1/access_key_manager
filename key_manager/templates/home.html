@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Sign In {% endblock %}
+{% block content %}
+
+  <div class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl text-blue font-bold text-center">Welcome to Access Key Manager!</h2>
+      <p class="text-center text-[secondary] mb-6 mt-2">The best way to access your school management system with great security!</p>
+        <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
+                <p class="py-2">New to access key manager? <a class="text-blue underline" href="{% url 'signup' %}"> Signup here! </a></p>
+                <p class="py-2">Already have an account? <a class="text-secondary underline" href="{% url 'signin' %}"> Signin here! </a></p>
+                <p class="py-2">Forgot password? <a class="text-pretty underline" href="{% url 'password_reset' %}"> Reset Password here! </a></p>
+        </div>
+    </div>
+{% endblock %}
+

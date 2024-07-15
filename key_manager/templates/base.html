@@ -14,25 +14,40 @@
     <title>Access Key Manager</title>
 </head>
 <body class="font-ubuntu bg-light">
-   <nav class="flex justify-between bg-blue p-5 container text-light">
-       <h5 class="text-xl font-bold">
-<!--           <img src="" alt="logo">-->
-          <a class="" href="">
-           Access Key Manager
-          </a>
-       </h5>
 
-       <div class="nav-menu">
-        <ul class="nav-menu-list flex justify-between">
-            <li class="nav-list mx-2"><a class="nav-link" href="{% url 'signin' %}">Sign In</a></li>
-            <li class="nav-list mx-2"><a class="nav-link" href="{% url 'signout' %}">Sign Out</a></li>
-            <li class="nav-list mx-2"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
-            <li class="nav-list mx-2"><a class="nav-link" href="{% url 'reset_password' %}">Reset Password</a></li>
-        </ul>
-       </div>
-   </nav>
+<nav class="flex justify-around items-center bg-blue text-light p-6 container w-full">
+    <div class="flex items-center flex-shrink-0 text-light mr-6">
+        <span class="font-semibold text-xl tracking-tight">Access Key Manager</span>
+    </div>
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div class="text-sm lg:flex-grow">
+            {% if user.is_authenticated %}
+                <a href="{% url 'signout' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                    Sign Out
+                </a>
+                
+                  {% if user.has_usable_password %}
+                    <!-- User has a password, so display reset password link -->
+                    <a href="{% url 'password_reset' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                        Change Password
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'signin' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                    Sign In
+                </a>
+                <a href="{% url 'signup' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                    Sign Up
+                </a>
+                <a href="{% url 'password_reset' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                        Reset Password
+                    </a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
 
-<main>
+<main class="pt-5">
     {% block content %}
     {% endblock %}
 </main>

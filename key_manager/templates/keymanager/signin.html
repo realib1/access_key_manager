@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %} Sign In {% endblock %}
+{% block content %}
+
+  <div class="container mx-auto px-4 py-16">
+        <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
+            <h1 class="text-2xl font-bold mb-6 text-center">Sign In</h1>
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-4 w-full">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="id_username">
+                        {{ form.username.label }}
+                    </label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <p class="text-red-500 text-xs italic">{{ form.username.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="mb-4 w-full">
+                    <label for="{{ form.password1.id_for_label }}" class="block text-blue text-sm font-bold mb-2">Password</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <p class="text-red text-xs italic">{{ form.password.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="text-center w-full">
+                    <button type="submit" class="bg-blue w-full text-light py-2 px-4 rounded hover:bg-blue-700">
+                        Sign In
+                    </button>
+                </div>
+            <div class="mt-2">
+                <p class="text-sm">New to access key manager? <a href="{% url 'signup' %}" class="underline text-blue"> Signup here! </a></p>
+            </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

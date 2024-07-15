@@ -1,48 +1,48 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import CustomUserCreationForm, CustomPasswordResetForm, CustomSetPasswordForm
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
-from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import views as auth_views
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from .models import AccessKey
+from .forms import AccessKeyForm
 
 
 def index(request):
-    return render(request, "base.html")
+    return render(request, "home.html")
 
 
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=username, email=email, password=password)
             login(request, user)
-            return redirect('home')
+            return redirect('singin')
     else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+        form = CustomUserCreationForm()
+    return render(request, 'keymanager/signup.html', {'form': form})
 
 
 def signin(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = authenticate(request, username=username, password=password)
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                return redirect('keylist')
     else:
         form = AuthenticationForm()
-    return render(request, 'signin.html', {'form': form})
+    return render(request, 'keymanager/signin.html', {'form': form})
 
 
 def signout(request):
@@ -50,28 +50,58 @@ def signout(request):
     return redirect('index')
 
 
-def reset_password(request):
-    if request.method == 'POST':
-        password_reset_form = PasswordResetForm(request.POST)
+def password_reset_request(request):
+    if request.method == "POST":
+        password_reset_form = CustomPasswordResetForm(request.POST)
         if password_reset_form.is_valid():
-            data = password_reset_form.cleaned_data['email']
-            associated_users = User.objects.get(email=data)
-            if associated_users.exist():
-                for user in associated_users:
-                    subject = f'Password reset for {user.username} requested'
-                    email_template = "key_manager/password_reset_email.txt"
-                    c = {
-                        "email": user.email,
-                        "domain": get_current_site(request).domain,
-                        "site_name": 'AccessKeyManager',
-                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-                        "user": user,
-                        "token": default_token_generator.make_token(user),
-                        "protocol": "http",
-                    }
+            password_reset_form.save(
+                request=request,
+                use_https=request.is_secure(),
+                email_template_name='registration/password_reset_email.html'
+            )
+            return redirect('password_reset_done')
+    else:
+        password_reset_form = CustomPasswordResetForm()
+    return render(request, 'registration/password_reset_form.html', {'form': password_reset_form})
 
-                    email = render_to_string(email_template, c)
-                    send_mail(subject, email, 'akm_admin@accesskeymanagey.com', [user.email], fail_silently=False)
 
-    password_reset_form = PasswordResetForm()
-    return render(request, 'reset_password.html', {'password_reset_form': password_reset_form})
+def password_reset_done(request):
+    return render(request, 'registration/password_reset_done.html')
+
+
+def password_reset_confirm(request, uidb64=None, token=None):
+    return auth_views.PasswordResetConfirmView.as_view(
+        template_name='registration/password_reset_confirm.html',
+        form_class=CustomSetPasswordForm,
+        success_url=reverse_lazy('password_reset_complete')
+    )(request, uidb64=uidb64, token=token)
+
+
+def password_reset_complete(request):
+    return render(request, 'registration/password_reset_complete.html')
+
+
+@login_required
+def create_key(request):
+    if request.method == 'POST':
+        form = AccessKeyForm(request.POST)
+        if form.is_valid():
+            access_key = form.save(commit=False)
+            access_key.user = request.user
+            access_key.save()
+            return redirect('keylist')
+    # else:
+    #     form = AccessKeyForm()
+    # return render(request, 'keymanager/create_key.html', {'form': form})
+
+
+@login_required
+def keylist(request):
+    keys = AccessKey.objects.filter(user=request.user)
+    return render(request, 'keymanager/keylist.html', {'keys': keys})
+
+
+@login_required
+def keydetails(request, id):
+    key = get_object_or_404(AccessKey, id=id)
+    return render(request, 'keymanager/keydetails.html', {'key': key})

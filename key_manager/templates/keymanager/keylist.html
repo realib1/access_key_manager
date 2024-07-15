@@ -2,26 +2,32 @@
 
 {% block content %}
 
-<h1>Your Access Keys</h1>
-
-<table>
-    <thead>
-    <tr>
-        <th>Key</th>
-        <th>Status</th>
-        <th>Procurement Date</th>
-        <th>Expiry Date</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    {% for key in object_list %}
-    <td>{{ key.key }}</td>
-    <td>{{ key.status }}</td>
-    <td>{{ key.procument_date }}</td>
-    <td>{{ key.expiry_date }}</td>
-    {% endfor %}
-    </tbody>
-</table>
-
+<div class="container mx-auto px-4 py-16">
+        <h1 class="text-3xl font-bold mb-6 text-center">Key List</h1>
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <table class="min-w-full table-auto table-responsive border bg-white">
+                <thead>
+                    <tr>
+{#                        <th class="py-2">Key ID</th>#}
+                        <th class="py-2">Key</th>
+                        <th class="py-2">Status</th>
+                        <th class="py-2">Expiry Date</th>
+                        <th class="py-2">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key in keys %}
+                    <tr class="bg-gray-100">
+                        <td class="py-2 text-center">{{ key.key }}</td>
+                        <td class="py-2 text-center">{{ key.status }}</td>
+                        <td class="py-2 text-center">{{ key.expiry_date }}</td>
+                        <td class="py-2 text-center">
+                            <a href="{% url 'keydetails' key.id %}" class="text-blue-500 hover:text-blue-700">View Details</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
