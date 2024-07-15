@@ -188,3 +188,51 @@ All forms are styled using Tailwind CSS classes. Ensure you've run the Tailwind 
 - **Tailwind CSS:** Frontend styling
 - **HTML5:** Markup language
 - **JavaScript:** Interactivity
+
+
+## ER Diagram of the Database Design
+To design an Entity-Relationship (ER) diagram for the Access Key Manager project, we need to identify the entities and their relationships based on the project requirements and functionalities. Since this project is primarily focused on user authentication and password management, the entities and relationships will be straightforward.
+
+### Entities
+1. **User**: This entity represents users of the application.
+2. **PasswordReset**: This entity represents password reset requests made by users.
+
+### Attributes
+1. **User**:
+   - `id`: Primary Key
+   - `username`: Unique identifier for the user
+   - `email`: Email address of the user
+   - `password`: Hashed password of the user
+   - `first_name`: First name of the user
+   - `last_name`: Last name of the user
+
+2. **PasswordReset**:
+   - `id`: Primary Key
+   - `user_id`: Foreign Key referencing `User`
+   - `reset_token`: Unique token for password reset
+   - `created_at`: Timestamp of when the reset request was created
+   - `used`: Boolean indicating whether the reset request has been used
+
+### Relationships
+- **User** to **PasswordReset**: One-to-Many (One user can have many password reset requests)
+
+### ER Diagram
+
+Here's a textual representation of the ER diagram:
+
+```
++-------------------+     +-------------------+
+|       User        |     |   PasswordReset   |
++-------------------+     +-------------------+
+| id (PK)           |<----| id (PK)           |
+| username          |     | user_id (FK)      |
+| email             |     | reset_token       |
+| password          |     | created_at        |
++-------------------+     | used              |      
+                          +-------------------+
+
+```
+
+
+
+![ER Diagram]()
