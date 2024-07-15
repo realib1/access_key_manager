@@ -112,11 +112,12 @@ on their systems to get access to a school management system after paying for th
     "127.0.0.1",
     ]
    ```
-9. **Install Tailwind CSS dependencies, by running the following command**
+9. **Install Tailwind CSS dependencies, by running the following command:** </br>
+      <span style="color:red"><strong>NOTE: </strong></span> There might be issues running the install, go to ```settings.py``` and edit ```NPM_BIN_PATH = '/usr/local/bin/npm'``` per the node location your OS. Read more ![here](https://django-tailwind.readthedocs.io/en/latest/installation.html)
    ```bash
     python manage.py tailwind install
    ```
-9. **Finally, Start the Tailwind CSS development server by running the following command in your terminal:**
+11. **Finally, Start the Tailwind CSS development server by running the following command in your terminal:**
    ```bash
     python manage.py tailwind start
    ```
