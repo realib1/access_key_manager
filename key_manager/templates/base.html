@@ -10,46 +10,106 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-        <script src="{% static 'js/main.js' %}" defer></script>
+{#        <script src="{% static 'js/main.js' %}" defer></script>#}
     <title>Access Key Manager</title>
 </head>
 <body class="font-ubuntu bg-light">
+<!-- Navbar -->
+<nav class="bg-blue text-light p-4 fixed top-0 left-0 w-full">
+    <div class="container mx-auto md:flex justify-between items-center w-full">
+<div class="flex items-center justify-between md:w-auto w-full">
+        <!-- Brand -->
+    {% if user.is_authenticated %}
+        <a href="{% url 'keylist' %}" class="text-white text-lg font-semibold">Access Key Manager</a>
+        {% else %}
+        <a href="{% url 'index' %}" class="text-white text-lg font-semibold">Access Key Manager</a>
+{% endif %}
 
-<nav class="flex justify-around items-center bg-blue text-light p-6 container w-full">
-    <div class="flex items-center flex-shrink-0 text-light mr-6">
-        <span class="font-semibold text-xl tracking-tight">Access Key Manager</span>
+     <!-- Hamburger menu button -->
+        <div class="md:hidden flex items-center">
+            <button id="menu-toggle" class="text-white focus:outline-none">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path id="path1" fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+                        <path id="path2" fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                    </svg>
+
+            </button>
     </div>
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-        <div class="text-sm lg:flex-grow">
-            {% if user.is_authenticated %}
-                <a href="{% url 'signout' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
-                    Sign Out
-                </a>
-                
+
+</div>
+        <!-- Navbar links -->
+        <div class=" md:flex md:items-center duration-500 md:static
+                        absolute left-0 md:w-auto bg-blue w-full
+                        flex items-center px-5" id="menu">
+            <ul class="text-sm md:flex items-center justify-end mb-2 gap-1 md:gap-0">
+
+                {% if user.is_authenticated %}
                   {% if user.has_usable_password %}
-                    <!-- User has a password, so display reset password link -->
-                    <a href="{% url 'password_reset' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                <li class="mr-2 mt-2 md:mt-0">
+                    <!-- if User has a password, so display reset password link -->
+                    <a href="{% url 'change_password' %}" class="block lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
                         Change Password
                     </a>
+                </li>
                 {% endif %}
-            {% else %}
-                <a href="{% url 'signin' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
-                    Sign In
-                </a>
-                <a href="{% url 'signup' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
-                    Sign Up
-                </a>
-                <a href="{% url 'password_reset' %}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                    <li class="mr-2 mt-2 md:mt-0">
+                    <a href="{% url 'signout' %}" class="hover:text-gray-300">Sign Out</a>
+                </li>
+                {% else %}
+                <li class="mr-2 mt-2 md:mt-0">
+                    <a href="{% url 'signin' %}" class="hover:text-gray-300">Sign In</a>
+                </li>
+                <li class="mr-2 mt-2 md:mt-0">
+                    <a href="{% url 'signup' %}" class="hover:text-gray-300">Sign Up</a>
+                </li>
+                    <li class="mr-2 mt-2 md:mt-0">
+                        <a href="{% url 'password_reset_form' %}" class="block lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
                         Reset Password
                     </a>
-            {% endif %}
+                    </li>
+                {% endif %}
+            </ul>
         </div>
     </div>
 </nav>
 
-<main class="pt-5">
+<main class="pt-6">
     {% block content %}
     {% endblock %}
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let isOpen = false;
+    function togglePaths() {
+        const path1 = document.getElementById('path1');
+        const path2 = document.getElementById('path2');
+        const menu = document.getElementById('menu');
+          if (isOpen) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+
+        if (isOpen) {
+            path1.style.display = 'none';
+            path2.style.display = 'initial';
+        } else {
+            path1.style.display = 'initial';
+            path2.style.display = 'none';
+        }
+    }
+
+    togglePaths();
+
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+        isOpen = !isOpen;
+        togglePaths();
+    });
+ });
+
+
+</script>
 </body>
 </html>

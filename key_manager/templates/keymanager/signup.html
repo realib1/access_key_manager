@@ -8,35 +8,35 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-4 w-full">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="id_username">
+                    <label class="block text-blue text-sm font-bold mb-2" for="id_username">
                         {{ form.username.label }}
                     </label>
-                    {{ form.username }}
+                    {{ form.username.as_widget }}
                     {% if form.username.errors %}
-                        <p class="text-red-500 text-xs italic">{{ form.username.errors }}</p>
+                        <p class="text-expired text-xs italic">{{ form.username.errors }}</p>
                     {% endif %}
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="id_email">
+                    <label class="block text-blue text-sm font-bold mb-2" for="id_email">
                         {{ form.email.label }}
                     </label>
                     {{ form.email }}
                     {% if form.email.errors %}
-                        <p class="text-red-500 text-xs italic">{{ form.email.errors }}</p>
+                        <p class="text-expired text-xs italic">{{ form.email.errors }}</p>
                     {% endif %}
                 </div>
                 <div class="mb-4">
-                    <label for="{{ form.password1.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <label for="{{ form.password1.id_for_label }}" class="block text-blue text-sm font-bold mb-2">Password</label>
                     {{ form.password1 }}
                     {% if form.password1.errors %}
-                        <p class="text-red-500 text-xs italic">{{ form.password1.errors }}</p>
+                        <p class="text-expired text-xs italic">{{ form.password1.errors }}</p>
                     {% endif %}
                 </div>
                 <div class="mb-4">
-                    <label for="{{ form.password2.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                    <label for="{{ form.password2.id_for_label }}" class="block text-blue text-sm font-bold mb-2">Confirm Password</label>
                     {{ form.password2 }}
                     {% if form.password2.errors %}
-                        <p class="text-red-500 text-xs italic">{{ form.password2.errors }}</p>
+                        <p class="text-expired text-xs italic">{{ form.password2.errors }}</p>
                     {% endif %}
                 </div>
                 <div class="text-center w-full">

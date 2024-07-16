@@ -8,7 +8,7 @@
         <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
                 <p class="py-2">New to access key manager? <a class="text-blue underline" href="{% url 'signup' %}"> Signup here! </a></p>
                 <p class="py-2">Already have an account? <a class="text-secondary underline" href="{% url 'signin' %}"> Signin here! </a></p>
-                <p class="py-2">Forgot password? <a class="text-pretty underline" href="{% url 'password_reset' %}"> Reset Password here! </a></p>
+                <p class="py-2">Forgot your password? <a class="text-expired underline" href="{% url 'password_reset_form' %}"> Reset here! </a></p>
         </div>
     </div>
 {% endblock %}

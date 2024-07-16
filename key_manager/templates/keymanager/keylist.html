@@ -4,30 +4,49 @@
 
 <div class="container mx-auto px-4 py-16">
         <h1 class="text-3xl font-bold mb-6 text-center">Key List</h1>
-        <div class="bg-white shadow-lg rounded-lg p-6">
-            <table class="min-w-full table-auto table-responsive border bg-white">
-                <thead>
-                    <tr>
+        <div class="flex flex-col justify-center items-center">
+
+        <ul class="w-fit  shadow-lg p-6 rounded-lg">
+            {% for key in keys %}
+                <li class="flex">
+                    <span class="font-bold block text-blue">Key: &nbsp;</span> <span class="block text-secondary">{{ key.key }}</span>
+                </li>
+                <li class="py-2 flex">
+                    <span class="font-bold block text-blue">Status: &nbsp;</span> <span class="block text-expired">{{ key.status }}</span>
+                </li>
+                <li class="gap-2 flex">
+                    <span class="font-bold block text-blue">Expiry Date: &nbsp;</span> <span class="block text-secondary">{{ key.expiry_date }}</span>
+                </li>
+
+                <div class="mt-3 text-center underline text-secondary">
+                    <a href="{% url 'keydetails' key.id %}" class="text-blue-500 hover:text-blue-700">View Details</a>
+                </div>
+            {% endfor %}
+        </ul>
+
+{#            <table class="min-w-full table-auto table-responsive bg-light">#}
+{#                <thead>#}
+{#                    <tr>#}
 {#                        <th class="py-2">Key ID</th>#}
-                        <th class="py-2">Key</th>
-                        <th class="py-2">Status</th>
-                        <th class="py-2">Expiry Date</th>
-                        <th class="py-2">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for key in keys %}
-                    <tr class="bg-gray-100">
-                        <td class="py-2 text-center">{{ key.key }}</td>
-                        <td class="py-2 text-center">{{ key.status }}</td>
-                        <td class="py-2 text-center">{{ key.expiry_date }}</td>
-                        <td class="py-2 text-center">
-                            <a href="{% url 'keydetails' key.id %}" class="text-blue-500 hover:text-blue-700">View Details</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+{#                        <th class="py-2">Key</th>#}
+{#                        <th class="py-2">Status</th>#}
+{#                        <th class="py-2">Expiry Date</th>#}
+{#                        <th class="py-2">Action</th>#}
+{#                    </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
+{#                    {% for key in keys %}#}
+{#                    <tr class="bg-gray-100">#}
+{#                        <td class="py-2 text-center">{{ key.key }}</td>#}
+{#                        <td class="py-2 text-center">{{ key.status }}</td>#}
+{#                        <td class="py-2 text-center">{{ key.expiry_date }}</td>#}
+{#                        <td class="py-2 text-center">#}
+{#                            <a href="{% url 'keydetails' key.id %}" class="text-blue-500 hover:text-blue-700">View Details</a>#}
+{#                        </td>#}
+{#                    </tr>#}
+{#                    {% endfor %}#}
+{#                </tbody>#}
+{#            </table>#}
         </div>
     </div>
 {% endblock %}

@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomUserCreationForm, CustomPasswordResetForm, CustomSetPasswordForm
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm
+from .forms import CustomUserCreationForm, CustomPasswordResetForm, CustomSetPasswordForm, CustomAuthenticationForm, \
+    CustomPasswordChangeForm
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from .models import AccessKey
 from .forms import AccessKeyForm
+from django.contrib import messages
 
 
 def index(request):
@@ -32,7 +33,7 @@ def signup(request):
 
 def signin(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -41,13 +42,28 @@ def signin(request):
                 login(request, user)
                 return redirect('keylist')
     else:
-        form = AuthenticationForm()
+        form = CustomAuthenticationForm()
     return render(request, 'keymanager/signin.html', {'form': form})
 
 
 def signout(request):
     logout(request)
     return redirect('index')
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was changed successfully!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = CustomPasswordChangeForm(request.user)
+    return render(request, 'keymanager/change_password.html', {'form': form})
 
 
 def password_reset_request(request):
@@ -57,28 +73,28 @@ def password_reset_request(request):
             password_reset_form.save(
                 request=request,
                 use_https=request.is_secure(),
-                email_template_name='registration/password_reset_email.html'
+                email_template_name='keymanager/password_reset_form.html'
             )
             return redirect('password_reset_done')
     else:
         password_reset_form = CustomPasswordResetForm()
-    return render(request, 'registration/password_reset_form.html', {'form': password_reset_form})
+    return render(request, 'keymanager/password_reset_form.html', {'form': password_reset_form})
 
 
 def password_reset_done(request):
-    return render(request, 'registration/password_reset_done.html')
+    return render(request, 'keymanager/password_reset_done.html')
 
 
 def password_reset_confirm(request, uidb64=None, token=None):
     return auth_views.PasswordResetConfirmView.as_view(
-        template_name='registration/password_reset_confirm.html',
+        template_name='keymanager/password_reset_confirm.html',
         form_class=CustomSetPasswordForm,
         success_url=reverse_lazy('password_reset_complete')
     )(request, uidb64=uidb64, token=token)
 
 
 def password_reset_complete(request):
-    return render(request, 'registration/password_reset_complete.html')
+    return render(request, 'keymanager/password_reset_complete.html')
 
 
 @login_required
@@ -105,3 +121,7 @@ def keylist(request):
 def keydetails(request, id):
     key = get_object_or_404(AccessKey, id=id)
     return render(request, 'keymanager/keydetails.html', {'key': key})
+
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)

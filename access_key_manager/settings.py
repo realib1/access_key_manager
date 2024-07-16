@@ -13,7 +13,6 @@ import os
 from pathlib import Path
 
 from django.contrib import staticfiles
-from rich import theme
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +27,7 @@ SECRET_KEY = 'django-insecure-o@v7pkfk66#ahq$&0j)1k-t2hb%wybchzoz%omn7tgxm$ov7f%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -88,7 +87,7 @@ ROOT_URLCONF = 'access_key_manager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'templates'],
+        'DIRS': [BASE_DIR/'key_manager'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -151,9 +150,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'theme', 'static_src'),                    # '/var/www/static/'
+    # os.path.join(BASE_DIR/'templates'),
+    os.path.join(BASE_DIR, 'theme', 'static_src'),
                     ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'theme', 'static')
+
 
 
 # Default primary key field type

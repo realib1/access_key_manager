@@ -45,8 +45,8 @@ module.exports = {
         colors: {
             'blue': '#071952',
             'secondary': '#088395',
-            'light-secondary': '#37B7C3',
             'light': '#EBF4F6',
+            'expired': '#E4003A',
         },
         fontFamily: {
             sans: ['Graphik', 'sans-serif'],
