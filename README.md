@@ -144,6 +144,8 @@ access_key_manager/
 |   |   |   ├── man.js
 │   ├── templates/
 │   │   ├── keymanager/
+|   |   |   ├── keydetails.html
+|   |   |   ├── keylist.html
 │   │   │   ├── password_reset_form.html
 │   │   │   ├── password_reset_done.html
 │   │   │   ├── password_reset_confirm.html
@@ -151,6 +153,7 @@ access_key_manager/
 │   │   │   ├── signin.html
 │   │   │   ├── signup.html
 │   │   ├── base.html
+|   |   ├── home.html
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
