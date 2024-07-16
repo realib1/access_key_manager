@@ -139,9 +139,6 @@ access_key_manager/
 │
 ├── key_manager/
 │   ├── migrations/
-|   ├── static
-|   |   ├── js
-|   |   |   ├── man.js
 │   ├── templates/
 │   │   ├── keymanager/
 |   |   |   ├── keydetails.html
@@ -154,6 +151,11 @@ access_key_manager/
 │   │   │   ├── signup.html
 │   │   ├── base.html
 |   |   ├── home.html
+|   ├── theme
+|   |   ├── static
+|   |   |    ├── css
+|   |   |    |    ├── dist
+|   |   |    |    |   ├── styles.css
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
