@@ -29,8 +29,8 @@
             <button id="menu-toggle" class="text-white focus:outline-none">
 
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                        <path id="path1" fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
-                        <path id="path2" fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                        <path id="path1" fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"></path>
+                        <path id="path2" fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"></path>
                     </svg>
 
             </button>
@@ -70,39 +70,6 @@
                 {% endif %}
             </ul>
         </div>
-
-{#<div class="relative">#}
-{#    <div class="hidden">#}
-{#            <ul class="text-sm flex flex-row items-center justify-start w-full absolute dropdown-menu" id="menu">#}
-{##}
-{#                {% if user.is_authenticated %}#}
-{#                  {% if user.has_usable_password %}#}
-{#                <li class="mr-2">#}
-{#                    <!-- if User has a password, so display reset password link -->#}
-{#                    <a href="{% url 'change_password' %}" class="block lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">#}
-{#                        Change Password#}
-{#                    </a>#}
-{#                </li>#}
-{#                {% endif %}#}
-{#                    <li class="mr-2">#}
-{#                    <a href="{% url 'signout' %}" class="hover:text-gray-300">Sign Out</a>#}
-{#                </li>#}
-{#                {% else %}#}
-{#                <li class="mr-2">#}
-{#                    <a href="{% url 'signin' %}" class="hover:text-gray-300">Sign In</a>#}
-{#                </li>#}
-{#                <li class="mr-2">#}
-{#                    <a href="{% url 'signup' %}" class="hover:text-gray-300">Sign Up</a>#}
-{#                </li>#}
-{#                    <li class="mr-2">#}
-{#                        <a href="{% url 'password_reset' %}" class="block lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">#}
-{#                        Reset Password#}
-{#                    </a>#}
-{#                    </li>#}
-{#                {% endif %}#}
-{#            </ul>#}
-{#        </div>#}
-{#    </div>#}
 </div>
 </nav>
 <main class="pt-5">
@@ -110,34 +77,30 @@
 
 <div class="container mx-auto px-4 py-16 justify-center">
         <div class="max-w-md mx-auto shadow-lg rounded-lg p-6">
-            <h1 class="text-3xl font-bold mb-6 text-center">Key Details</h1>
-            <div class="mb-4">
-                <label class="block text-blue text-sm font-bold mb-2">Key ID:</label>
-                <p class="bg-gray-200 text-secondary border border-gray-200 rounded py-3 px-4">{{ key.id }}</p>
+            <h1 class="text-3xl font-bold mb-6 text-center text-blue">Key Details</h1>
+            <div class="mb-4 flex">
+                <label class="block text-blue text-sm font-bold">Key: &nbsp;</label>
+                <p class="text-secondary">{{ key.key }}</p>
             </div>
-            <div class="mb-4">
-                <label class="block text-blue text-sm font-bold mb-2">Key:</label>
-                <p class="bg-gray-200 text-secondary border border-gray-200 rounded py-3 px-4">{{ key.key }}</p>
+            <div class="mb-4 flex">
+                <label class="block text-blue text-sm font-bold">Procurement Date: &nbsp;</label>
+                <p class="text-secondary">{{ key.procurement_date }}</p>
             </div>
-            <div class="mb-4">
-                <label class="block text-blue text-sm font-bold mb-2">Procurement Date:</label>
-                <p class="bg-gray-200 text-secondary border border-gray-200 rounded py-3 px-4">{{ key.procurement_date }}</p>
+            <div class="mb-4 flex">
+                <label class="block text-blue text-sm font-bold">Expiry Date: &nbsp;</label>
+                <p class="text-expired">{{ key.expiry_date }}</p>
             </div>
-            <div class="mb-4">
-                <label class="block text-blue text-sm font-bold mb-2">Expiry Date:</label>
-                <p class="bg-gray-200 text-expired border border-gray-200 rounded py-3 px-4">{{ key.expiry_date }}</p>
+            <div class="mb-4 flex">
+                <label class="block text-blue text-sm font-bold">Key Status: &nbsp;</label>
+                <p class="block {% if key.status == 'expired' %}text-expired{% elif key.status == 'revoked' %}text-secondary{% else %}text-green{% endif %}">{{ key.status|capfirst }}</p>
             </div>
-            <div class="mb-4">
-                <label class="block text-blue text-sm font-bold mb-2">Key Status:</label>
-                <p class="bg-gray-200 text-blue border border-gray-200 rounded py-3 px-4">{{ key.status }}</p>
+            <div class="mb-4 flex">
+                <label class="block text-blue text-sm font-bold">Usage Count: &nbsp;</label>
+                <p class="text-secondary">{{ key.usage_count }}</p>
             </div>
-            <div class="mb-4">
-                <label class="block text-blue text-sm font-bold mb-2">Usage Count</label>
-                <p class="bg-gray-200 text-secondary border border-gray-200 rounded py-3 px-4">{{ key.usage_count }}</p>
-            </div>
-            <div class="mb-4">
-                <label class="block text-blue text-sm font-bold mb-2">Max Usage:</label>
-                <p class="bg-gray-200 text-secondary border border-gray-200 rounded py-3 px-4">{{ key.max_usage }}</p>
+            <div class="mb-4 flex">
+                <label class="block text-blue text-sm font-bold">Max Usage: &nbsp;</label>
+                <p class="text-secondary">{{ key.max_usage }}</p>
             </div>
 
 

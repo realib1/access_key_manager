@@ -1,8 +1,22 @@
 {% extends 'base.html' %}
-{% block title %} Sign Up {% endblock %}
-{% block content %}
+{% block title %}Sign Up{% endblock %}
 
-   <div class="container mx-auto px-4 py-16">
+{% block content %}
+    <div class="container mx-auto px-4 py-16">
+        {% if messages %}
+            <div class="mb-4">
+                <div class="flex justify-center">
+                    {% for message in messages %}
+                        <div id="message-{{ forloop.counter }}"
+                             class="p-4 mb-4 text-sm {% if message.tags == 'error' %}text-expired bg-pale-red{% else %}text-green bg-green-light{% endif %} rounded-lg transition-opacity text-center w-1/2"
+                             role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
         <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-6 text-center">Sign Up</h1>
             <form method="post">
@@ -11,9 +25,18 @@
                     <label class="block text-blue text-sm font-bold mb-2" for="id_username">
                         {{ form.username.label }}
                     </label>
-                    {{ form.username.as_widget }}
+                    {{ form.username }}
                     {% if form.username.errors %}
-                        <p class="text-expired text-xs italic">{{ form.username.errors }}</p>
+                        <p class="text-expired text-xs italic">{{ form.username.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+                <div class="mb-4 w-full">
+                    <label class="block text-blue text-sm font-bold mb-2" for="id_school_name">
+                        {{ form.school_name.label }}
+                    </label>
+                    {{ form.school_name }}
+                    {% if form.school_name.errors %}
+                        <p class="text-expired text-xs italic">{{ form.school_name.errors|striptags }}</p>
                     {% endif %}
                 </div>
                 <div class="mb-4">
@@ -22,21 +45,25 @@
                     </label>
                     {{ form.email }}
                     {% if form.email.errors %}
-                        <p class="text-expired text-xs italic">{{ form.email.errors }}</p>
+                        <p class="text-expired text-xs italic">{{ form.email.errors|striptags }}</p>
                     {% endif %}
                 </div>
                 <div class="mb-4">
-                    <label for="{{ form.password1.id_for_label }}" class="block text-blue text-sm font-bold mb-2">Password</label>
+                    <label for="{{ form.password1.id_for_label }}" class="block text-blue text-sm font-bold mb-2">
+                        Password
+                    </label>
                     {{ form.password1 }}
                     {% if form.password1.errors %}
-                        <p class="text-expired text-xs italic">{{ form.password1.errors }}</p>
+                        <p class="text-expired text-xs italic">{{ form.password1.errors|striptags }}</p>
                     {% endif %}
                 </div>
                 <div class="mb-4">
-                    <label for="{{ form.password2.id_for_label }}" class="block text-blue text-sm font-bold mb-2">Confirm Password</label>
+                    <label for="{{ form.password2.id_for_label }}" class="block text-blue text-sm font-bold mb-2">
+                        Confirm Password
+                    </label>
                     {{ form.password2 }}
                     {% if form.password2.errors %}
-                        <p class="text-expired text-xs italic">{{ form.password2.errors }}</p>
+                        <p class="text-expired text-xs italic">{{ form.password2.errors|striptags }}</p>
                     {% endif %}
                 </div>
                 <div class="text-center w-full">
@@ -44,11 +71,11 @@
                         Sign Up
                     </button>
                 </div>
-            <div class="mt-2">
-                <p class="text-sm">Already have an account? <a href="{% url 'signin' %}" class="underline text-blue"> Signin here! </a></p>
-            </div>
+                <div class="mt-2 text-center">
+                    <p class="text-sm">Already have an account? <a href="{% url 'signin' %}"
+                                                                   class="underline text-blue-500">Sign in here!</a></p>
+                </div>
             </form>
         </div>
     </div>
 {% endblock %}
-

@@ -46,7 +46,11 @@ module.exports = {
             'blue': '#071952',
             'secondary': '#088395',
             'light': '#EBF4F6',
-            'expired': '#E4003A',
+            'expired': '#B43F3F',
+            'pale-red': '#FFAAAA',
+            'revoked': '#FF8225',
+            'green': '#059212',
+            'green-light': '#C3FF93',
         },
         fontFamily: {
             sans: ['Graphik', 'sans-serif'],

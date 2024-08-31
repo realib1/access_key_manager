@@ -4,14 +4,14 @@
 
   <div class="container mx-auto px-4 py-16">
       {% if user.is_authenticated %}
-          <h2 class="text-center text-capitalize text-xl">Hello, Welcome {{ user }}</h2>
+          <h2 class="text-center text-capitalize text-xl text-blue">Hello, Welcome {{ school_name }}</h2>
           <div class="flex justify-center items-center py-10 text-center w-full">
-          <a href="{% url 'keylist' %}" class="bg-blue text-light text-center rounded text-lg font-semibold px-4 py-2">Go to Keys</a>
+          <a href="{% url 'keylist' %}" class="bg-blue text-light text-center rounded text-lg px-4 py-2">Go to Keys</a>
 
           </div>
           {% else %}
-        <h2 class="text-3xl text-blue font-bold text-center">Welcome to Access Key Manager!</h2>
-      <p class="text-center text-[secondary] mb-6 mt-2">The best way to access your school management system with great security!</p>
+        <h2 class="text-2xl lg:text-3xl text-blue font-bold text-center">Welcome to Access Key Manager!</h2>
+      <p class="text-center text-secondary mb-6 mt-2">The best way to access your school management system with great security!</p>
         <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
                 <p class="py-2">New to access key manager? <a class="text-blue underline" href="{% url 'signup' %}"> Signup here! </a></p>
                 <p class="py-2">Already have an account? <a class="text-secondary underline" href="{% url 'signin' %}"> Signin here! </a></p>

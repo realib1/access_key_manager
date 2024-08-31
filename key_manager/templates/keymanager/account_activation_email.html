@@ -1,0 +1,12 @@
+{% autoescape off %}
+    
+    Hi {{ user.username }},
+        
+    Thank you for signing up. Please verify your email address by clicking the link below:
+        
+    http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" 
+    
+    
+    © {% now 'Y' %} Access Key Manager Team
+
+{% endautoescape %}

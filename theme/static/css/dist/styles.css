@@ -2138,8 +2138,8 @@ select {
   height: 100vh;
 }
 
-.w-10 {
-  width: 2.5rem;
+.w-1\/2 {
+  width: 50%;
 }
 
 .w-\[this-is\\\\\] {
@@ -2161,10 +2161,6 @@ select {
 
 .w-full {
   width: 100%;
-}
-
-.min-w-full {
-  min-width: 100%;
 }
 
 .max-w-md {
@@ -3159,9 +3155,24 @@ select {
   background-color: rgb(7 25 82 / var(--tw-bg-opacity));
 }
 
+.bg-green {
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 146 18 / var(--tw-bg-opacity));
+}
+
+.bg-green-light {
+  --tw-bg-opacity: 1;
+  background-color: rgb(195 255 147 / var(--tw-bg-opacity));
+}
+
 .bg-light {
   --tw-bg-opacity: 1;
   background-color: rgb(235 244 246 / var(--tw-bg-opacity));
+}
+
+.bg-pale-red {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 170 170 / var(--tw-bg-opacity));
 }
 
 .decoration-slice {
@@ -3286,6 +3297,11 @@ select {
   padding: 1.5rem;
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -3314,6 +3330,15 @@ select {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
 }
 
 .pl-6 {
@@ -3532,10 +3557,6 @@ select {
   color: rgb(51 102 153 / .35);
 }
 
-.text-\[secondary\] {
-  color: secondary;
-}
-
 .text-blue {
   --tw-text-opacity: 1;
   color: rgb(7 25 82 / var(--tw-text-opacity));
@@ -3543,7 +3564,12 @@ select {
 
 .text-expired {
   --tw-text-opacity: 1;
-  color: rgb(228 0 58 / var(--tw-text-opacity));
+  color: rgb(180 63 63 / var(--tw-text-opacity));
+}
+
+.text-green {
+  --tw-text-opacity: 1;
+  color: rgb(5 146 18 / var(--tw-text-opacity));
 }
 
 .text-light {
@@ -3875,6 +3901,12 @@ select {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-opacity {
+  transition-property: opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -5860,6 +5892,11 @@ select {
 
   .lg\:inline-block {
     display: inline-block;
+  }
+
+  .lg\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
   }
 }
 

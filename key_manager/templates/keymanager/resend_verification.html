@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mx-auto p-4">
+        <!-- Messages -->
+        {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                    <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h2 class="text-2xl font-bold mb-4 text-blue">Resend Verification Email</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="email" class="block text-blue">Email</label>
+                {{ forms.email.as_widget }}
+                {% if form.email.errors %}
+                    <p class="text-expired text-xs italic">{{ form.email.errors|striptags }}</p>
+                {% endif %}
+            </div>
+            <button type="submit" class="bg-green text-light py-2 px-4 rounded">Resend Verification</button>
+        </form>
+    </div>
+
+{% endblock %}
